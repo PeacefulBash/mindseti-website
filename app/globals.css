@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette from the logo and strategy document. Every section is a brand colour, none is white. */
+  --color-ink: #033b44;
+  --color-teal: #0b4f5f;
+  --color-deep: #022a31;
+  --color-lime: #8dba0b;
+  --color-aqua: #22b8c7;
+
+  --font-display: "Bricolage Grotesque Variable", "Trebuchet MS", Arial, sans-serif;
+  --font-body: "Figtree Variable", "Segoe UI", Arial, sans-serif;
+  --font-serif: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+  --font-logo: "Montserrat Variable", "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    background: var(--color-deep);
+  }
+  body {
+    background: var(--color-ink);
+    color: #eef6f3;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+    font-weight: 800;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-lime);
+    outline-offset: 3px;
+  }
+  .on-lime :focus-visible {
+    outline-color: var(--color-ink);
+  }
+}
+
+@layer components {
+  /* Glowing brand-coloured panels. The glow colour comes from --g (an r,g,b triplet). */
+  .glow {
+    --g: 141, 186, 11;
+    position: relative;
+    border: 2px solid rgba(var(--g), 0.9);
+    background: linear-gradient(155deg, #0d5a6b 0%, #04424c 55%, #033640 100%);
+    box-shadow:
+      0 0 0 1px rgba(var(--g), 0.25),
+      0 0 22px rgba(var(--g), 0.5),
+      0 0 70px rgba(var(--g), 0.24),
+      inset 0 0 36px rgba(var(--g), 0.12);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .glow-aqua { --g: 34, 184, 199; }
+  /* For cards that sit on a lime section, where a lime glow would vanish */
+  .glow-ink {
+    --g: 2, 42, 49;
+    background: var(--color-deep);
+    box-shadow: 0 0 0 1px rgba(2, 42, 49, 0.4), 0 14px 0 -4px rgba(2, 42, 49, 0.35);
+  }
+  a.glow:hover, .glow-hover:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 0 0 1px rgba(var(--g), 0.45),
+      0 0 34px rgba(var(--g), 0.75),
+      0 0 100px rgba(var(--g), 0.38),
+      inset 0 0 48px rgba(var(--g), 0.2);
+  }
+  a.glow-ink:hover {
+    box-shadow: 0 0 0 1px rgba(2, 42, 49, 0.5), 0 18px 0 -4px rgba(2, 42, 49, 0.45);
+  }
+
+  /* Organic shapes for cards and picture frames, so nothing is a plain rectangle */
+  .shape-card { border-radius: 2.75rem 0.75rem 2.75rem 0.75rem; }
+  .shape-arch { border-radius: 999px 999px 2.5rem 2.5rem; }
+  .shape-leaf { border-radius: 7rem 1rem 7rem 1rem; }
+  .shape-blob { border-radius: 58% 42% 55% 45% / 48% 58% 42% 52%; }
+}
+
+/* The one orchestrated moment: the logo stroke slides into place on load. */
+@keyframes stroke-in {
+  from { transform: translate(-6%, 8%) rotate(var(--stroke-angle, 40deg)); opacity: 0; }
+  to   { transform: translate(0, 0) rotate(var(--stroke-angle, 40deg)); opacity: 1; }
+}
+.stroke-in { animation: stroke-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .stroke-in { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+  a.glow:hover, .glow-hover:hover { transform: none; }
+}

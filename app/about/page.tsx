@@ -10,7 +10,7 @@ import { CtaBand } from "@/components/sections/CtaBand";
 export const metadata: Metadata = {
   title: "About Mindset.i",
   description:
-    "Mindset.i is a motivation and leadership initiative in Mbabane, Eswatini. Inspire change. Awaken potential.",
+    "Mindset.i is more than a motivation and leadership initiative, it is a revolution meant to fully unleash the potential of any individual that hears this gospel. It is based in Mbabane, Eswatini. Inspire change. Awaken potential.",
   alternates: { canonical: "/about" },
 };
 
